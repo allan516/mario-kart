@@ -48,7 +48,15 @@ async function getRandomBlock() {
 async function playRaceEngine(character1, character2) {
   for (let round = 1; round <= 5; round++) {
     console.log(`🏁 Rodada ${round}`);
+
     let block = await getRandomBlock();
+
     console.log(`Bloco: ${block}`);
   }
+
+  let diceResult1 = await rollDice();
+  let diceResult2 = await rollDice();
+
+  let totalTestSkill1 = 0;
+  let totalTestSkill2 = 0;
 }
