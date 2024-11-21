@@ -45,12 +45,27 @@ async function logRollResult(characterName, block, diceResult, attribute) {
   );
 }
 
+async function declareWinner(character1, character2) {
+  console.log("Resultado final: ");
+  console.log(`${character1.NOME}: ${character1.PONTOS} ponto(s)`);
+  console.log(`${character2.NOME}: ${character2.PONTOS} ponto(s)`);
+
+  if (character1.PONTOS > character2.PONTOS) {
+    console.log(`\n ${character1.NOME} venceu a corrida! 🏆`);
+  } else if (character2.PONTOS > character1.PONTOS) {
+    console.log(`\n ${character2.NOME} venceu a corrida! 🏆`);
+  } else {
+    console.log("A corrida terminou em empate.");
+  }
+}
+
 (async function main() {
   console.log(
     `🏁🚨 Corrida entre ${player1.NOME} e ${player2.NOME} começando ... \n`
   );
 
   await playRaceEngine(player1, player2);
+  await declareWinner(player1, player2);
 })();
 
 async function playRaceEngine(character1, character2) {
@@ -73,17 +88,27 @@ async function playRaceEngine(character1, character2) {
 
       await logRollResult(
         character1.NOME,
-        "velocidade",
+        "VELOCIDADE",
         diceResult1,
         character1.VELOCIDADE
       );
 
       await logRollResult(
         character2.NOME,
-        "velocidade",
+        "VELOCIDADE",
         diceResult2,
         character2.VELOCIDADE
       );
+
+      if (totalTestSkill1 > totalTestSkill2) {
+        console.log(`${character1.NOME} marcou um ponto!`);
+        character1.PONTOS++;
+      } else if (totalTestSkill2 > totalTestSkill1) {
+        console.log(`${character2.NOME} marcou um ponto!`);
+        character2.PONTOS++;
+      } else if (totalTestSkill2 === totalTestSkill1) {
+        console.log("Empate.");
+      }
     }
     if (block === "CURVA") {
       totalTestSkill1 = diceResult1 + character1.MANOBRABILIDADE;
@@ -91,17 +116,27 @@ async function playRaceEngine(character1, character2) {
 
       await logRollResult(
         character1.NOME,
-        "manobrabilidade",
+        "MANOBRABILIDADE",
         diceResult1,
         character1.MANOBRABILIDADE
       );
 
       await logRollResult(
         character2.NOME,
-        "manobrabilidade",
+        "MANOBRABILIDADE",
         diceResult2,
         character2.MANOBRABILIDADE
       );
+
+      if (totalTestSkill1 > totalTestSkill2) {
+        console.log(`${character1.NOME} marcou um ponto!`);
+        character1.PONTOS++;
+      } else if (totalTestSkill2 > totalTestSkill1) {
+        console.log(`${character2.NOME} marcou um ponto!`);
+        character2.PONTOS++;
+      } else if (totalTestSkill2 === totalTestSkill1) {
+        console.log("Empate.");
+      }
     }
     if (block === "CONFRONTO") {
       let powerResult1 = diceResult1 + character1.PODER;
@@ -123,10 +158,27 @@ async function playRaceEngine(character1, character2) {
         character2.PODER
       );
 
-      character2.PONTOS -=
-        powerResult1 > powerResult2 && character2.PONTOS > 0 ? 1 : 0;
+      if (powerResult1 > powerResult2 && character2.PONTOS > 0) {
+        console.log(
+          `${character1.NOME} venceu o confronto! ${character2.NOME} perdeu um ponto.🐢`
+        );
+        character2.PONTOS--;
+      } else if (powerResult1 > powerResult2 && character2.PONTOS === 0) {
+        console.log(
+          `${character1.NOME} venceu o confronto! Mas ${character2.NOME} não tem pontos para perder.🐢`
+        );
+      }
 
-      character1.PONTOS -= powerResult2 && character2.PONTOS > 0 ? 1 : 0;
+      if (powerResult2 > powerResult1 && character1.PONTOS > 0) {
+        console.log(
+          `${character2.NOME} venceu o confronto! ${character1.NOME} perdeu um ponto.🐢`
+        );
+        character1.PONTOS--;
+      } else if (powerResult2 > powerResult1 && character1.PONTOS === 0) {
+        console.log(
+          `${character2.NOME} venceu o confronto! Mas ${character1.NOME} não tem pontos para perder.🐢`
+        );
+      }
 
       console.log(
         powerResult2 === powerResult1
@@ -135,13 +187,6 @@ async function playRaceEngine(character1, character2) {
       );
     }
 
-    if (totalTestSkill1 > totalTestSkill2) {
-      console.log(`${character1.NOME} marcou um ponto!`);
-      character1.PONTOS++;
-    } else if (totalTestSkill2 > totalTestSkill1) {
-      console.log(`${character2.NOME} marcou um ponto!`);
-      character2.PONTOS++;
-    }
     console.log(
       "*__________________________________________________________________*"
     );
