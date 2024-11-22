@@ -1,1 +1,0 @@
-somando com

@@ -39,7 +39,7 @@ async function getRandomBlock() {
 
 async function logRollResult(characterName, block, diceResult, attribute) {
   console.log(
-    `${characterName} 🎲 rolou um dado de ${block} e obteve ${diceResult} + ${attribute} pontos = ${
+    `${characterName} 🎲 rolou um dado de ${block} e obteve ${diceResult} + ${attribute} = ${
       diceResult + attribute
     }`
   );
@@ -67,6 +67,37 @@ async function declareWinner(character1, character2) {
   await playRaceEngine(player1, player2);
   await declareWinner(player1, player2);
 })();
+// Sorteia aleatóriamente um player para perder 1 ou 2 pontos em blocos de confronto
+async function shellOrBomb() {
+  const random = Math.round(Math.random() * 6);
+
+  if (random === 1 && player1.PONTOS > 0) {
+    console.log(`${player1.NOME} deu azar e levou um casco 🐢 -1 ponto.`);
+    player1.PONTOS--;
+  } else if (random === 2 && player1.PONTOS > 1) {
+    console.log(`${player1.NOME} deu azar e levou uma bomba 💣 -2 pontos.`);
+    player1.PONTOS -= 2;
+  } else if (random === 3 && player2.PONTOS > 0) {
+    console.log(`${player2.NOME} deu azar e levou um casco 🐢 -1 ponto.`);
+    player2.PONTOS--;
+  } else if (random === 4 && player2.PONTOS > 1) {
+    console.log(`${player2.NOME} deu azar e levou uma bomba 💣 -2 pontos.`);
+    player2.PONTOS -= 2;
+  }
+}
+
+//Sorteia aleatóriamente um turbo para quem ganhar o confronto
+
+async function turboPower(playerResult1, playerResult2) {
+  const random = Math.round(Math.random() * 5);
+  if (random === 4 && playerResult1 > playerResult2) {
+    console.log(`${player1.NOME} teve sorte e ganhou um turbo +1 ponto.`);
+    player1.PONTOS++;
+  } else if (random === 4 && playerResult1 < playerResult2) {
+    console.log(`${player2.NOME} teve sorte e ganhou um turbo +1 ponto.`);
+    player2.PONTOS++;
+  }
+}
 
 async function playRaceEngine(character1, character2) {
   for (let round = 1; round <= 5; round++) {
@@ -158,6 +189,8 @@ async function playRaceEngine(character1, character2) {
         character2.PODER
       );
 
+      await shellOrBomb();
+      await turboPower(powerResult1, powerResult2);
       if (powerResult1 > powerResult2 && character2.PONTOS > 0) {
         console.log(
           `${character1.NOME} venceu o confronto! ${character2.NOME} perdeu um ponto.🐢`

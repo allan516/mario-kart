@@ -97,6 +97,17 @@
   </li>
 </ul>
 
+---
+
+<ul>
+  <li><input type="checkbox" id="pistas-1-item" /> <label for="pistas-1-item">Funções extras:</label></li>
+    <ul>
+      <li><input type="checkbox" id="pistas-2-1-item" /> <label for="pistas-2-1-item">Caso o bloco da pista seja um CONFRONTO e o jogador for atingido por um casco ou uma bomba, ele perderá um ou dois pontos respectivamente.</label></li>
+      <li><input type="checkbox" id="pistas-2-2-item" /> <label for="pistas-2-2-item">Caso o bloco da pista seja um CONFRONTO e o jogador ganhar um turbo ele ganhará um ponto.</label></li>
+    </ul>
+  </li>
+</ul>
+
 <b>Condição de vitória:</b>
 
 <input type="checkbox" id="vitoria-item" />
