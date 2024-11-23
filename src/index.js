@@ -15,23 +15,29 @@ const players = [
   { NOME: "Bowser", VELOCIDADE: 5, MANOBRABILIDADE: 2, PODER: 5, PONTOS: 0 },
 ];
 
-console.log(players[1].NOME);
+const n1 = Math.round(Math.random() * 5);
+const n2 = Math.round(Math.random() * 5);
 
-const player1 = {
-  NOME: "Mario",
-  VELOCIDADE: 4,
-  MANOBRABILIDADE: 3,
-  PODER: 3,
-  PONTOS: 0,
-};
+const player1 = players[n1];
+const player2 = players[n2];
 
-const player2 = {
-  NOME: "Luigi",
-  VELOCIDADE: 3,
-  MANOBRABILIDADE: 4,
-  PODER: 4,
-  PONTOS: 0,
-};
+// Adicione um jogador específico copiando os poderes, conforme os exemplos abaixo:
+
+// const player1 = {
+//   NOME: "Mario",
+//   VELOCIDADE: 4,
+//   MANOBRABILIDADE: 3,
+//   PODER: 3,
+//   PONTOS: 0,
+// };
+
+// const player2 = {
+//   NOME: "Luigi",
+//   VELOCIDADE: 3,
+//   MANOBRABILIDADE: 4,
+//   PODER: 4,
+//   PONTOS: 0,
+// };
 
 async function rollDice() {
   return Math.floor(Math.random() * 6) + 1;
