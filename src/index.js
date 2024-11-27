@@ -1,3 +1,5 @@
+import chalk from "chalk";
+
 // characters
 
 const players = [
@@ -76,11 +78,17 @@ async function declareWinner(character1, character2) {
   console.log(`${character2.NOME}: ${character2.PONTOS} ponto(s)`);
 
   if (character1.PONTOS > character2.PONTOS) {
-    console.log(`\n ${character1.NOME} venceu a corrida! 🏆`);
+    console.log(
+      chalk.white.bgGreen.italic(`\n ${character1.NOME} venceu a corrida! 🏆  `)
+    );
   } else if (character2.PONTOS > character1.PONTOS) {
-    console.log(`\n ${character2.NOME} venceu a corrida! 🏆`);
+    console.log(
+      chalk.white.bgGreen.italic(`\n ${character2.NOME} venceu a corrida! 🏆  `)
+    );
   } else {
-    console.log("A corrida terminou em empate.");
+    console.log(
+      chalk.black.bgYellow.italic("\n A corrida terminou em empate.")
+    );
   }
 }
 
